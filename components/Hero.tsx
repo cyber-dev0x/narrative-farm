@@ -95,7 +95,7 @@ export default function Hero() {
 
       <footer className="absolute bottom-4 text-[#333] font-mono text-xs">
         <a
-          href="https://github.com/YOUR_REPO"
+          href="https://github.com/cyber-dev0x/narrative-farm"
           id="github-link"
           target="_blank"
           rel="noopener noreferrer"

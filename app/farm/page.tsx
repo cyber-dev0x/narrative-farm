@@ -17,7 +17,7 @@ export default function FarmPage() {
 
       <footer className="border-t border-[#00ff41]/10 px-4 py-3 text-center">
         <a
-          href="https://github.com/YOUR_REPO"
+          href="https://github.com/cyber-dev0x/narrative-farm"
           id="github-link"
           target="_blank"
           rel="noopener noreferrer"
