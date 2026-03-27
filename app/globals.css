@@ -1,26 +1,116 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --neon-green: #00ff41;
+  --neon-magenta: #ff00ff;
+  --bg: #0a0a0a;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html, body {
+  background: #0a0a0a;
+  color: #00ff41;
+  margin: 0;
+  padding: 0;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Pixel / retro font — loaded via next/font in layout */
+.font-pixel {
+  font-family: var(--font-press-start), monospace;
+}
+
+/* Scanline overlay */
+.scanlines::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* CRT flicker */
+@keyframes crt-flicker {
+  0%   { opacity: 1; }
+  92%  { opacity: 1; }
+  93%  { opacity: 0.7; }
+  94%  { opacity: 1; }
+  96%  { opacity: 0.8; }
+  97%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+.crt-flicker {
+  animation: crt-flicker 5s infinite;
+}
+
+/* Glitch text effect */
+@keyframes glitch-1 {
+  0%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+  20%       { clip-path: inset(30% 0 50% 0); transform: translate(-4px, 2px); color: #ff00ff; }
+  40%       { clip-path: inset(60% 0 20% 0); transform: translate(4px, -2px); color: #00ffff; }
+  60%       { clip-path: inset(10% 0 80% 0); transform: translate(-2px, 1px); }
+  80%       { clip-path: inset(80% 0 5% 0);  transform: translate(2px, -1px); }
+}
+
+@keyframes glitch-2 {
+  0%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+  25%       { clip-path: inset(50% 0 30% 0); transform: translate(4px, -2px); color: #00ffff; }
+  50%       { clip-path: inset(20% 0 60% 0); transform: translate(-4px, 2px); color: #ff00ff; }
+  75%       { clip-path: inset(70% 0 10% 0); transform: translate(2px, 1px); }
+}
+
+.glitch-text {
+  position: relative;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  background: transparent;
+}
+
+.glitch-text::before {
+  animation: glitch-1 4s infinite steps(1);
+  color: #ff00ff;
+}
+
+.glitch-text::after {
+  animation: glitch-2 4s infinite steps(1) 0.3s;
+  color: #00ffff;
+}
+
+/* Glitch tile animation */
+@keyframes tile-glitch {
+  0%,  90%, 100% { transform: translate(0); filter: none; }
+  91%             { transform: translate(-2px, 1px); filter: hue-rotate(90deg); }
+  93%             { transform: translate(2px, -1px); filter: hue-rotate(-90deg); }
+  95%             { transform: translate(-1px, 2px); }
+}
+
+.glitch-tile {
+  animation: tile-glitch 3s infinite;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #111;
+}
+::-webkit-scrollbar-thumb {
+  background: #00ff4155;
+  border-radius: 2px;
 }
